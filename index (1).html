@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Oana Roșu — Îngrijire post-procedură</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1B120D;
+    --ink-soft:#2A1D15;
+    --paper:#F6EFE6;
+    --paper-soft:#EEE3D3;
+    --gold:#B9932F;
+    --gold-bright:#D4B15A;
+    --gold-line: rgba(185,147,47,0.35);
+    --clay:#8B6650;
+    --line: rgba(27,18,13,0.10);
+    --safe-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  *{box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter', sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+    padding-bottom: calc(78px + var(--safe-bottom));
+  }
+  h1,h2,h3{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    letter-spacing:-0.01em;
+  }
+  .eyebrow{
+    font-size:10px;
+    letter-spacing:0.22em;
+    text-transform:uppercase;
+    color:var(--gold);
+    font-weight:600;
+  }
+  .wrap{padding: 0 20px;}
+  a{color:inherit;}
+  button{font-family:inherit; cursor:pointer; -webkit-appearance:none;}
+  .hairline{height:1px; background: var(--gold-line); border:none;}
+
+  .topbar{
+    display:flex; align-items:center; justify-content:space-between;
+    padding: 16px 20px;
+    position:sticky; top:0; z-index:20;
+    background: rgba(246,239,230,0.9);
+    backdrop-filter: blur(10px);
+    border-bottom:1px solid var(--gold-line);
+  }
+  .monogram{display:flex; align-items:center; gap:9px;}
+  .monogram .mark{
+    width:30px; height:30px;
+    border:1px solid var(--gold);
+    border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Cormorant Garamond'; font-style:italic; font-size:14px;
+    color:var(--gold);
+  }
+  .monogram .name{font-family:'Fraunces'; font-size:13.5px; font-weight:500;}
+  .icon-btn{
+    width:34px; height:34px; border-radius:50%;
+    border:1px solid var(--gold-line);
+    background:transparent;
+    display:flex; align-items:center; justify-content:center;
+    font-size:14px; color:var(--gold);
+  }
+
+  .hero{
+    background: linear-gradient(180deg, #1B120D 0%, #241813 100%);
+    color:var(--paper);
+    padding: 40px 0 34px;
+    position:relative; overflow:hidden;
+  }
+  .hero::before{
+    content:"";
+    position:absolute; inset:0;
+    background:
+      radial-gradient(circle at 85% -10%, rgba(212,177,90,0.16), transparent 55%),
+      radial-gradient(circle at -10% 110%, rgba(212,177,90,0.08), transparent 50%);
+  }
+  .hero .wrap{position:relative;}
+  .hero .eyebrow{margin-bottom:14px;}
+  .hero h1{font-size: 27px; line-height:1.2; margin-bottom: 14px; font-weight:400;}
+  .hero h1 em{font-style:italic; color:var(--gold-bright);}
+  .hero p{color: rgba(246,239,230,0.68); font-size:13.5px; max-width:34ch;}
+
+  .client-row{
+    margin: 26px -20px 0; padding: 0 20px 4px;
+    display:flex; gap:9px; overflow-x:auto; scrollbar-width:none;
+  }
+  .client-row::-webkit-scrollbar{display:none;}
+  .chip{
+    flex:0 0 auto;
+    border:1px solid rgba(246,239,230,0.22);
+    background:transparent; color: rgba(246,239,230,0.72);
+    padding:10px 16px; border-radius:2px;
+    font-size:11.5px; letter-spacing:0.04em; font-weight:500;
+    white-space:nowrap;
+  }
+  .chip.active{border-color:var(--gold); color:var(--gold-bright);}
+
+  section.timeline{padding: 34px 0 8px;}
+  .section-head{margin-bottom: 20px;}
+  .section-head .eyebrow{margin-bottom:8px;}
+  .section-head h2{font-size: 20px; line-height:1.3; font-weight:400;}
+
+  .fade-bar{
+    position:relative; height:2px; margin: 8px 0 22px;
+    background: linear-gradient(90deg,
+      #1B120D 0%, #6E4A26 22%, #B9932F 42%, #D4B15A 58%,
+      #E3CB93 76%, #EFE0C0 92%, #F6EFE6 100%);
+  }
+  .fade-bar::after{
+    content:""; position:absolute; top:-3px; left:0;
+    width:8px; height:8px; border-radius:50%;
+    background:var(--gold-bright);
+    box-shadow:0 0 0 3px rgba(212,177,90,0.2);
+  }
+
+  .day-track{
+    display:flex; gap: 6px; overflow-x:auto; scroll-snap-type: x mandatory;
+    padding: 2px 2px 10px; margin: 0 -20px; padding-left:20px; padding-right:20px;
+    scrollbar-width:none;
+  }
+  .day-track::-webkit-scrollbar{display:none;}
+  .day-dot{
+    scroll-snap-align:start;
+    display:flex; flex-direction:column; align-items:center; gap:8px;
+    background:transparent; border:1px solid var(--line); border-radius: 2px;
+    padding:11px 15px; flex:0 0 auto; min-width:66px;
+  }
+  .day-dot .dot{width:5px; height:5px; border-radius:50%; background: var(--clay);}
+  .day-dot.active{background: var(--ink); border-color:var(--ink);}
+  .day-dot.active .dot{background:var(--gold-bright);}
+  .day-dot span{font-size:11px; font-weight:600; color: rgba(27,18,13,0.55); white-space:nowrap;}
+  .day-dot.active span{color:var(--paper);}
+
+  .day-detail{
+    margin-top: 18px; background:#fff; border:1px solid var(--line);
+    border-radius: 2px; padding: 26px 22px;
+  }
+  .day-detail .status{
+    display:inline-flex; align-items:center; gap:8px;
+    font-size:10px; letter-spacing:0.16em; text-transform:uppercase;
+    font-weight:600; color:var(--gold); margin-bottom:14px;
+  }
+  .day-detail .status::before{content:""; width:14px; height:1px; background:var(--gold);}
+  .day-detail h3{font-size:18px; margin-bottom:11px; line-height:1.35; font-weight:500;}
+  .day-detail p{font-size:13.5px; color:#4A3A2E; margin-bottom:16px;}
+  .day-detail ul{list-style:none; font-size:13px; color:#4A3A2E;}
+  .day-detail li{padding-left:18px; position:relative; margin-bottom:10px;}
+  .day-detail li::before{content:"·"; position:absolute; left:2px; top:-3px; color:var(--gold); font-size:20px;}
+  .warn-box{
+    margin-top:18px; background: var(--paper-soft); border-left:1px solid var(--gold);
+    padding:13px 15px; font-size:12px; color:#5B4632;
+  }
+  .day-swipe-hint{font-size:10.5px; color:rgba(27,18,13,0.38); text-align:center; margin-top:8px;}
+
+  section.products{padding: 46px 0; background: var(--ink); margin-top:36px; color:var(--paper);}
+  section.products .eyebrow{color:var(--gold-bright);}
+  section.products h2{color:var(--paper); font-weight:400;}
+  .prod-scroll{
+    display:flex; gap:14px; overflow-x:auto; scroll-snap-type:x mandatory;
+    margin: 20px -20px 0; padding: 2px 20px 6px; scrollbar-width:none;
+  }
+  .prod-scroll::-webkit-scrollbar{display:none;}
+  .prod-card{
+    scroll-snap-align:start; flex: 0 0 76%;
+    background: var(--ink-soft); border:1px solid rgba(212,177,90,0.18);
+    border-radius: 2px; padding: 20px; display:flex; flex-direction:column; gap:9px;
+  }
+  .prod-swatch{width:100%; height:80px; border-radius:1px; margin-bottom:4px; position:relative; overflow:hidden;}
+  .prod-swatch::after{
+    content:""; position:absolute; inset:0;
+    background: linear-gradient(115deg, transparent 40%, rgba(255,255,255,0.18) 50%, transparent 60%);
+  }
+  .prod-card h3{font-size:14.5px; font-weight:500; font-family:'Fraunces'; color:var(--paper);}
+  .prod-card p{font-size:12.5px; color:rgba(246,239,230,0.6); flex-grow:1; line-height:1.5;}
+  .prod-price{
+    display:flex; justify-content:space-between; align-items:center;
+    margin-top:8px; padding-top:14px; border-top:1px solid rgba(212,177,90,0.18);
+  }
+  .prod-price strong{font-size:15px; font-family:'Fraunces'; color:var(--gold-bright); font-weight:500;}
+  .add-btn{
+    border:1px solid var(--gold-line); background:none; padding:8px 14px;
+    font-size:10.5px; letter-spacing:0.08em; text-transform:uppercase;
+    font-weight:600; border-radius:1px; color:var(--gold-bright);
+  }
+  .add-btn.added{background:var(--gold); border-color:var(--gold); color:var(--ink);}
+
+  section.checkin{padding: 46px 0;}
+  .checkin-card{background: #fff; border: 1px solid var(--line); padding: 28px 22px; border-radius: 2px;}
+  .checkin-card h3{font-size:19px; margin: 10px 0 12px; line-height:1.35; font-weight:500;}
+  .checkin-card p{font-size:13px; color:#5B4C43; margin-bottom:22px;}
+  .wa-btn{
+    display:flex; align-items:center; justify-content:center; gap:9px;
+    background: var(--ink); color:var(--gold-bright);
+    padding: 15px 20px; border-radius: 1px;
+    font-weight:600; font-size:12px; letter-spacing:0.08em; text-transform:uppercase;
+    text-decoration:none; border:none; width:100%;
+  }
+
+  .checkin-side{margin-top:26px; counter-reset:step;}
+  .checkin-side h3{font-size:15.5px; margin-bottom:14px; font-weight:500;}
+  .checkin-side ol{list-style:none; font-size:13px; color:#4A3A2E;}
+  .checkin-side li{padding-left:26px; position:relative; margin-bottom:12px; counter-increment: step;}
+  .checkin-side li::before{
+    content:counter(step); position:absolute; left:0; top:-1px;
+    width:18px; height:18px; border:1px solid var(--gold); border-radius:50%;
+    font-size:10px; color:var(--gold); display:flex; align-items:center; justify-content:center;
+  }
+
+  section.retouch{padding: 10px 0 40px;}
+  .retouch-banner{
+    background: linear-gradient(150deg, #241813, #1B120D);
+    border:1px solid var(--gold-line); color:#fff;
+    padding: 28px 22px; border-radius: 2px; text-align:center;
+  }
+  .retouch-banner .eyebrow{display:block; margin-bottom:10px;}
+  .retouch-banner h3{font-size:19px; margin-bottom:8px; line-height:1.35; font-weight:400;}
+  .retouch-banner p{font-size:12.5px; color:rgba(246,239,230,0.6); margin-bottom:20px;}
+  .book-btn{
+    background:transparent; color:var(--gold-bright); padding:14px 20px; border-radius:1px;
+    border: 1px solid var(--gold); font-weight:600; font-size:11px; letter-spacing:0.1em;
+    text-transform:uppercase; width:100%;
+  }
+
+  footer{padding: 26px 20px 30px; text-align:center; font-size:11px; color: rgba(27,18,13,0.42); line-height:1.6;}
+
+  .sticky-cta{
+    position:fixed; left:0; right:0; bottom:0; z-index:30;
+    background: rgba(27,18,13,0.94); backdrop-filter: blur(10px);
+    border-top:1px solid var(--gold-line);
+    padding: 12px 20px calc(12px + var(--safe-bottom)); display:flex; gap:10px;
+  }
+  .sticky-cta button{
+    flex:1; padding:14px 10px; border-radius:1px;
+    font-size:11px; letter-spacing:0.08em; text-transform:uppercase;
+    font-weight:600; border:1px solid transparent;
+  }
+  .sticky-cta .ghost{background:transparent; color:var(--paper); border:1px solid rgba(246,239,230,0.25);}
+  .sticky-cta .solid{background:var(--gold); color:var(--ink);}
+
+  @media (min-width: 720px){
+    .wrap{max-width:640px; margin:0 auto; padding:0 32px;}
+    .hero{padding:56px 0 50px;}
+    .hero h1{font-size:36px;}
+    .hero p{font-size:14.5px;}
+    .day-detail{padding:32px 34px;}
+    .prod-card{flex-basis: 42%;}
+    .sticky-cta{max-width:640px; left:50%; transform:translateX(-50%);}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="monogram">
+    <div class="mark">OR</div>
+    <div class="name">Oana Roșu</div>
+  </div>
+  <button class="icon-btn" aria-label="Profil">♡</button>
+</div>
+
+<div class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Traseul tău de vindecare</div>
+    <h1>Rezultatul se construiește <em>zi cu zi</em>, nu doar în salon.</h1>
+    <p>Alege procedura ta pentru a vedea exact la ce să te aștepți, etapă cu etapă.</p>
+    <div class="client-row" id="procSelector">
+      <button class="chip active" data-proc="brows">Microblading sprâncene</button>
+      <button class="chip" data-proc="lips">Machiaj permanent buze</button>
+      <button class="chip" data-proc="liner">Eyeliner permanent</button>
+      <button class="chip" data-proc="removal">Îndepărtare pigment</button>
+    </div>
+  </div>
+</div>
+
+<section class="timeline">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Etapă cu etapă</div>
+      <h2 id="timelineTitle">Vindecarea sprâncenelor</h2>
+    </div>
+
+    <div class="fade-bar"></div>
+    <div class="day-track" id="dayTrack"></div>
+    <div class="day-swipe-hint">glisează pentru toate etapele →</div>
+
+    <div class="day-detail" id="dayDetail"></div>
+  </div>
+</section>
+
+<section class="products">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Ritual de îngrijire</div>
+      <h2 style="font-size:20px;">Selecția pentru vindecare</h2>
+    </div>
+    <div class="prod-scroll" id="prodGrid"></div>
+  </div>
+</section>
+
+<section class="checkin">
+  <div class="wrap">
+    <div class="checkin-card">
+      <div class="eyebrow">La 4 săptămâni</div>
+      <h3>Trimite-i Oanei o poză cu rezultatul</h3>
+      <p>Verificăm împreună dacă mai e nevoie de ceva înainte de retuș.</p>
+      <a class="wa-btn" href="#" onclick="return false;">Trimite pe WhatsApp</a>
+    </div>
+    <div class="checkin-side">
+      <h3>De ce contează check-in-ul</h3>
+      <ol>
+        <li>Prindem din timp orice reacție neobișnuită a pielii.</li>
+        <li>Stabilim dacă e nevoie de retuș de corecție, inclus în pachet.</li>
+        <li>Programăm din timp retușul anual, cât mai există loc liber.</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<hr class="hairline" style="margin: 0 20px;">
+
+<section class="retouch">
+  <div class="wrap">
+    <div class="retouch-banner">
+      <span class="eyebrow">Rezervare anticipată</span>
+      <h3>Culoarea se estompează natural în 12-18 luni.</h3>
+      <p>Programează-ți retușul anual acum și păstrează prioritate în calendar.</p>
+      <button class="book-btn">Programează retușul</button>
+    </div>
+  </div>
+</section>
+
+<footer>Oana Roșu Permanent Makeup — acest ghid nu înlocuiește indicațiile medicale primite la cabinet.</footer>
+
+<div class="sticky-cta">
+  <button class="ghost" onclick="document.querySelector('.checkin').scrollIntoView({behavior:'smooth'})">Trimite poză</button>
+  <button class="solid" onclick="document.querySelector('.retouch').scrollIntoView({behavior:'smooth'})">Programează</button>
+</div>
+
+<script>
+const DATA = {
+  brows: {
+    title: "Vindecarea sprâncenelor",
+    days: [
+      {label:"Ziua 1", status:"Culoare intensă", title:"Sprâncenele arată mai închise decât te aștepți", body:"Complet normal — culoarea din ziua 1 e cu 30-40% mai intensă decât rezultatul final.", tips:["Nu uda zona timp de 24h","Evită machiajul pe zonă","Tamponează ușor dacă apare limfă"]},
+      {label:"Ziua 3", status:"Crustă fină", title:"Apare o pojghiță fină pe piele", body:"Pielea începe repararea naturală. Crusta protejează pigmentul de dedesubt.", tips:["Aplică balsamul de 2 ori/zi","Nu atinge, nu freca, nu exfolia","Evită sauna și piscina"]},
+      {label:"Ziua 6", status:"Exfoliere", title:"Crustele încep să se desprindă singure", body:"Cea mai sensibilă etapă — nu smulge crustele.", tips:["Lasă crustele să cadă singure","Continuă hidratarea ușoară"]},
+      {label:"Ziua 10", status:"Efect fantomă", title:"Culoarea pare deschisă, aproape estompată", body:"NU e culoarea finală — fenomen normal numit \"ghosting\".", tips:["Nu te alarma","Continuă SPF pe zonă"]},
+      {label:"Ziua 21", status:"Culoare revine", title:"Pigmentul reapare treptat", body:"Pe măsură ce pielea se reface, culoarea reală se vede din nou.", tips:["Reia rutina obișnuită de îngrijire","Continuă protecția solară"]},
+      {label:"Ziua 30", status:"Aproape final", title:"Rezultatul e vizibil aproape complet", body:"Moment bun pentru o poză de check-in.", tips:["Trimite o poză pentru evaluare"]},
+      {label:"Ziua 45", status:"Fereastră retuș", title:"Poți programa retușul de corecție", body:"Retușul ajustează simetria pe baza vindecării tale.", tips:["Programează din timp"]},
+    ]
+  },
+  lips: {
+    title: "Vindecarea buzelor",
+    days: [
+      {label:"Ziua 1", status:"Umflătură", title:"Buzele sunt umflate, culoarea foarte intensă", body:"Umflătura ușoară e normală în primele 24-48h.", tips:["Aplică balsamul des","Evită mâncarea picantă","Bea cu paiul"]},
+      {label:"Ziua 3", status:"Descuamare", title:"Buzele încep să se cojească", body:"Ca după arsură solară — pielea se reînnoiește.", tips:["Nu smulge pielea","Hidratare constantă"]},
+      {label:"Ziua 6", status:"Zone inegale", title:"Pot apărea pete inegale", body:"Normal — se uniformizează ulterior.", tips:["Continuă hidratarea","Evită rujuri cu alcool"]},
+      {label:"Ziua 14", status:"Nuanță palidă", title:"Culoarea pare mult mai palidă", body:"Etapă de \"ghosting\" — nuanța reală revine.", tips:["Răbdare","SPF pe buze la soare"]},
+      {label:"Ziua 30", status:"Aproape final", title:"Nuanța definitivă se stabilizează", body:"Moment bun pentru check-in.", tips:["Trimite o poză pentru evaluare"]},
+      {label:"Ziua 45", status:"Fereastră retuș", title:"Programează retușul de corecție", body:"Ajustăm nuanța pe baza vindecării.", tips:["Rezervă din timp"]},
+    ]
+  },
+  liner: {
+    title: "Vindecarea eyelinerului",
+    days: [
+      {label:"Ziua 1", status:"Linie intensă", title:"Linia arată groasă și foarte definită", body:"Umflătura ușoară a pleoapei e normală.", tips:["Comprese reci curate","Nu freca ochii","Evită machiajul"]},
+      {label:"Ziua 3", status:"Crustă fină", title:"Zona devine uscată", body:"Normal, chiar dacă abia se observă.", tips:["Balsam cu grijă","Nu purta lentile 48h"]},
+      {label:"Ziua 6", status:"Exfoliere", title:"Crusta fină se desprinde", body:"Evită frecarea zonei.", tips:["Nu curăța agresiv","Evită genele false"]},
+      {label:"Ziua 14", status:"Linie subțire", title:"Linia pare mai fină decât în ziua 1", body:"Vindecarea completă reduce grosimea aparentă.", tips:["Nu e rezultatul final","Îngrijire blândă"]},
+      {label:"Ziua 30", status:"Rezultat final", title:"Linia arată cum va rămâne", body:"Moment bun pentru check-in.", tips:["Trimite o poză"]},
+      {label:"Ziua 45", status:"Fereastră retuș", title:"Retuș de corecție disponibil", body:"Ajustăm grosimea dacă e nevoie.", tips:["Rezervă din timp"]},
+    ]
+  },
+  removal: {
+    title: "Traseul îndepărtării pigmentului",
+    days: [
+      {label:"Ziua 1", status:"Roșeață", title:"Zona e roșie, poate forma crustă", body:"Reacție normală la procesul de îndepărtare.", tips:["Zonă curată și uscată","Fără machiaj"]},
+      {label:"Ziua 5", status:"Exfoliere", title:"Crusta se desprinde", body:"Fiecare sesiune scoate treptat pigmentul.", tips:["Nu grăbi desprinderea","Hidratare ușoară"]},
+      {label:"Săpt. 3", status:"Estompare", title:"Pigmentul e vizibil mai deschis", body:"Rezultatul se acumulează pe mai multe sesiuni.", tips:["SPF obligatoriu","Programează sesiunea următoare"]},
+      {label:"Săpt. 8", status:"Sesiune 2", title:"Zona e pregătită pentru a doua sesiune", body:"Evaluăm câte sesiuni mai sunt necesare.", tips:["Rezervă din timp"]},
+      {label:"Luna 3", status:"Pregătire redo", title:"Pigmentul e suficient de estompat", body:"Poți programa noul design.", tips:["Programează consultația"]},
+    ]
+  }
+};
+
+const PRODUCTS = [
+  {name:"Balsam vindecare intensivă", desc:"Aplicare zilnică în primele 10 zile — protejează pigmentul proaspăt.", price:"75 lei", color:"linear-gradient(135deg,#8B6650,#B9932F)"},
+  {name:"Ser regenerator pigment", desc:"Susține uniformitatea culorii în etapa de \"ghosting\".", price:"95 lei", color:"linear-gradient(135deg,#3A2415,#8B6650)"},
+  {name:"Cremă SPF zonă tratată", desc:"Protejează culoarea de estompare prematură.", price:"65 lei", color:"linear-gradient(135deg,#B9932F,#D4B15A)"},
+];
+
+let currentProc = "brows";
+let currentDay = 0;
+
+function renderProducts(){
+  const grid = document.getElementById('prodGrid');
+  grid.innerHTML = PRODUCTS.map((p,i)=>`
+    <div class="prod-card">
+      <div class="prod-swatch" style="background:${p.color}"></div>
+      <h3>${p.name}</h3>
+      <p>${p.desc}</p>
+      <div class="prod-price">
+        <strong>${p.price}</strong>
+        <button class="add-btn" data-i="${i}">Adaugă</button>
+      </div>
+    </div>
+  `).join('');
+  grid.querySelectorAll('.add-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      btn.classList.add('added');
+      btn.textContent = 'Adăugat';
+    });
+  });
+}
+
+function renderTimeline(){
+  const proc = DATA[currentProc];
+  document.getElementById('timelineTitle').textContent = proc.title;
+  const track = document.getElementById('dayTrack');
+  track.innerHTML = proc.days.map((d,i)=>`
+    <button class="day-dot ${i===currentDay?'active':''}" data-i="${i}">
+      <span class="dot"></span>
+      <span>${d.label}</span>
+    </button>
+  `).join('');
+  track.querySelectorAll('.day-dot').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      currentDay = parseInt(btn.dataset.i);
+      renderTimeline();
+      btn.scrollIntoView({behavior:'smooth', inline:'center', block:'nearest'});
+    });
+  });
+  renderDetail();
+}
+
+function renderDetail(){
+  const d = DATA[currentProc].days[currentDay];
+  document.getElementById('dayDetail').innerHTML = `
+    <span class="status">${d.status}</span>
+    <h3>${d.title}</h3>
+    <p>${d.body}</p>
+    <ul>${d.tips.map(t=>`<li>${t}</li>`).join('')}</ul>
+    <div class="warn-box">Roșeață puternică, durere accentuată sau secreție neobișnuită? Scrie-ne imediat pe WhatsApp — nu aștepta următoarea etapă.</div>
+  `;
+}
+
+document.querySelectorAll('#procSelector .chip').forEach(chip=>{
+  chip.addEventListener('click', ()=>{
+    document.querySelectorAll('#procSelector .chip').forEach(c=>c.classList.remove('active'));
+    chip.classList.add('active');
+    currentProc = chip.dataset.proc;
+    currentDay = 0;
+    renderTimeline();
+  });
+});
+
+renderProducts();
+renderTimeline();
+</script>
+
+</body>
+</html>
